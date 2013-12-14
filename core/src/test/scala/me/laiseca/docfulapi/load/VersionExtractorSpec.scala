@@ -9,11 +9,11 @@ class VersionExtractorSpec extends FlatSpec {
   private val lastVersion = "0.0.5"
   
   "given a version map with entries for all the values" should "create a complete Version instance" in {
-    val versionMap = Map[String, String]("since" -> "0.0.1",
-        "deprecated" -> "0.0.2", "until" -> "0.0.3")
+    val versionMap = Map[String, String]("since" -> "0.0.2",
+        "deprecated" -> "0.0.3", "until" -> "0.0.4")
     val testObj = new VersionExtractorObject(firstVersion, lastVersion)
         
-    assertResult(new Version("0.0.1", Option.apply("0.0.2"), "0.0.3")) {
+    assertResult(new Version("0.0.2", Option.apply("0.0.3"), "0.0.4")) {
       testObj.extractVersion(versionMap)
     }
   }
