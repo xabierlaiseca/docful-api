@@ -16,14 +16,13 @@ class ModelFileLoaderSpec extends FlatSpec with MockitoSugar {
   "given a model type with no properties" should "extract the fields and create a model object" in {
     val model = 
       Map("model" -> List(
-    	Map("name" -> "User"))
+        Map("name" -> "User"))
       )
     
     val yamlLoader = mock[YamlLoader]
     when(yamlLoader.loadAsMap[String, List[_]](filepath)).thenReturn(Option.apply(model))
     
     val loader = new ModelFileLoader(firstVersion, lastVersion, yamlLoader)
-    
     assertResult(new Model(List(new Type("User", Option.empty, List(), Version.apply(firstVersion, lastVersion))))) {
       loader.load(filepath);
     }
@@ -41,7 +40,6 @@ class ModelFileLoaderSpec extends FlatSpec with MockitoSugar {
     when(yamlLoader.loadAsMap[String, List[_]](filepath)).thenReturn(Option.apply(model))
     
     val loader = new ModelFileLoader(firstVersion, lastVersion, yamlLoader)
-    
     assertResult(new Model(List(new Type("User", Option.empty, 
         List(new Property("prop", "string", true, Option.empty, Version.apply(firstVersion, lastVersion))),
         Version.apply(firstVersion, lastVersion))))) {
@@ -61,7 +59,6 @@ class ModelFileLoaderSpec extends FlatSpec with MockitoSugar {
     when(yamlLoader.loadAsMap[String, List[_]](filepath)).thenReturn(Option.apply(model))
     
     val loader = new ModelFileLoader(firstVersion, lastVersion, yamlLoader)
-    
     assertResult(new Model(List(new Type("User", Option.apply("description"), 
         List(new Property("prop", "string", true, Option.apply("desc2"), Version.apply(firstVersion, lastVersion))),
         Version.apply(firstVersion, lastVersion))))) {
@@ -85,7 +82,6 @@ class ModelFileLoaderSpec extends FlatSpec with MockitoSugar {
     when(yamlLoader.loadAsMap[String, List[_]](filepath)).thenReturn(Option.apply(model))
     
     val loader = new ModelFileLoader(firstVersion, lastVersion, yamlLoader)
-    
     assertResult(new Model(List(new Type("User", Option.apply("description"), 
         List(new Property("prop", "string", true, Option.apply("desc2"),
           new Version("0.0.2", Option.apply("0.0.3"), "0.0.4"))),
