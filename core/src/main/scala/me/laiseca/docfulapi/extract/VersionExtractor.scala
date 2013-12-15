@@ -1,4 +1,4 @@
-package me.laiseca.docfulapi.load
+package me.laiseca.docfulapi.extract
 
 import me.laiseca.docfulapi.model.Version
 

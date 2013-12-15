@@ -1,6 +1,8 @@
 package me.laiseca.docfulapi.extract
 
-trait Extractor {
+trait Extractor[A] {
+  def extract(map:Map[String,_]):A
+  
   protected def as[T](name:String, map:Map[String,_]):T = {
     map.get(name).get.asInstanceOf[T]
   }

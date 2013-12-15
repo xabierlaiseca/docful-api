@@ -1,15 +1,14 @@
-package me.laiseca.docfulapi.load
+package me.laiseca.docfulapi.extract
 
-import org.mockito.Mockito.when
 import org.scalatest.FlatSpec
 import org.scalatest.mock.MockitoSugar
 import me.laiseca.docfulapi.model.Model
 import me.laiseca.docfulapi.model.Type
 import me.laiseca.docfulapi.model.Version
 import me.laiseca.docfulapi.model.Property
+import me.laiseca.docfulapi.load.YamlLoader
 
-class ModelFileLoaderSpec extends FlatSpec with MockitoSugar {
-  private val filepath = "model.yaml";
+class ModelExtractorSpec extends FlatSpec {
   private val firstVersion = "0.0.1"
   private val lastVersion = "0.1.0"
 
@@ -19,12 +18,11 @@ class ModelFileLoaderSpec extends FlatSpec with MockitoSugar {
         Map("name" -> "User"))
       )
     
-    val yamlLoader = mock[YamlLoader]
-    when(yamlLoader.loadAsMap[String, List[_]](filepath)).thenReturn(Option.apply(model))
-    
-    val loader = new ModelFileLoader(firstVersion, lastVersion, yamlLoader)
-    assertResult(new Model(List(new Type("User", Option.empty, List(), Version.apply(firstVersion, lastVersion))))) {
-      loader.load(filepath);
+    val extractor = new ModelExtractor(firstVersion, lastVersion)
+    assertResult{
+      new Model(List(new Type("User", Option.empty, List(), Version.apply(firstVersion, lastVersion))))
+    } {
+      extractor.extract(model)
     }
   } 
   
@@ -36,14 +34,12 @@ class ModelFileLoaderSpec extends FlatSpec with MockitoSugar {
     	))
       ))
     
-    val yamlLoader = mock[YamlLoader]
-    when(yamlLoader.loadAsMap[String, List[_]](filepath)).thenReturn(Option.apply(model))
-    
-    val loader = new ModelFileLoader(firstVersion, lastVersion, yamlLoader)
-    assertResult(new Model(List(new Type("User", Option.empty, 
+    val extractor = new ModelExtractor(firstVersion, lastVersion)
+    assertResult{new Model(List(new Type("User", Option.empty, 
         List(new Property("prop", "string", true, Option.empty, Version.apply(firstVersion, lastVersion))),
-        Version.apply(firstVersion, lastVersion))))) {
-      loader.load(filepath);
+        Version.apply(firstVersion, lastVersion))))
+    } {
+      extractor.extract(model)
     }
   } 
   
@@ -55,14 +51,12 @@ class ModelFileLoaderSpec extends FlatSpec with MockitoSugar {
     	))
       ))
     
-    val yamlLoader = mock[YamlLoader]
-    when(yamlLoader.loadAsMap[String, List[_]](filepath)).thenReturn(Option.apply(model))
-    
-    val loader = new ModelFileLoader(firstVersion, lastVersion, yamlLoader)
-    assertResult(new Model(List(new Type("User", Option.apply("description"), 
+    val extractor = new ModelExtractor(firstVersion, lastVersion)
+    assertResult{new Model(List(new Type("User", Option.apply("description"), 
         List(new Property("prop", "string", true, Option.apply("desc2"), Version.apply(firstVersion, lastVersion))),
-        Version.apply(firstVersion, lastVersion))))) {
-      loader.load(filepath);
+        Version.apply(firstVersion, lastVersion))))
+    } {
+      extractor.extract(model)
     }
   }
   
@@ -78,15 +72,13 @@ class ModelFileLoaderSpec extends FlatSpec with MockitoSugar {
     	)
       ))
     
-    val yamlLoader = mock[YamlLoader]
-    when(yamlLoader.loadAsMap[String, List[_]](filepath)).thenReturn(Option.apply(model))
-    
-    val loader = new ModelFileLoader(firstVersion, lastVersion, yamlLoader)
-    assertResult(new Model(List(new Type("User", Option.apply("description"), 
+    val extractor = new ModelExtractor(firstVersion, lastVersion)
+    assertResult{new Model(List(new Type("User", Option.apply("description"), 
         List(new Property("prop", "string", true, Option.apply("desc2"),
           new Version("0.0.2", Option.apply("0.0.3"), "0.0.4"))),
-        new Version("0.0.6", Option.apply("0.0.7"), "0.0.8"))))) {
-      loader.load(filepath);
+        new Version("0.0.6", Option.apply("0.0.7"), "0.0.8"))))
+    } {
+      extractor.extract(model)
     }
   }
 }

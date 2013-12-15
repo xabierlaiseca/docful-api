@@ -1,8 +1,7 @@
-package me.laiseca.docfulapi.load
+package me.laiseca.docfulapi.extract
 
 import org.scalatest.FlatSpec
 import me.laiseca.docfulapi.model.Version
-import me.laiseca.docfulapi.model.Versionable
 
 class VersionExtractorSpec extends FlatSpec {
   private val firstVersion = "0.0.1"

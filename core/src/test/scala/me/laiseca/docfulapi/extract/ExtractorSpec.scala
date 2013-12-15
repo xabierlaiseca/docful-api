@@ -39,7 +39,11 @@ class ExtractorSpec extends FlatSpec {
     }
   }
   
-  class ExtractorObject extends Extractor {
+  class ExtractorObject extends Extractor[Any] {
+    def extract(map:Map[String,_]) = {
+      null
+    }
+    
     def asWrapper[T](key:String, map:Map[String,_]) = {
       as[T](key, map)
     }

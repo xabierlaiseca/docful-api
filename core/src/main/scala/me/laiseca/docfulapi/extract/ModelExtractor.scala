@@ -1,20 +1,16 @@
-package me.laiseca.docfulapi.load
+package me.laiseca.docfulapi.extract
 
 import me.laiseca.docfulapi.model.Model
 import me.laiseca.docfulapi.model.Type
 import me.laiseca.docfulapi.model.Property
 import me.laiseca.docfulapi.model.Property
+import me.laiseca.docfulapi.load.YamlLoader
 
-class ModelFileLoader(protected val firstVersion:String, protected val lastVersion:String, 
-    private val loader:YamlLoader = new YamlLoader()) extends VersionExtractor {
-  def load(filepath:String):Model = {
-    val yaml = loader.loadAsMap[String, List[_]](filepath)
-    if(yaml.isDefined) {
-      val model = yaml.get.getOrElse("model", List())
-      extractModel(model)
-    } else {
-      emptyModel
-    }
+class ModelExtractor(protected val firstVersion:String, protected val lastVersion:String)
+    extends Extractor[Model] with VersionExtractor {
+  def extract(yaml:Map[String,_]):Model = {
+    val model = yaml.getOrElse("model", List()).asInstanceOf[List[_]]
+    extractModel(model)
   }
   
   private def extractModel(model:List[_]) = {
