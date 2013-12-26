@@ -2,7 +2,7 @@ package me.laiseca.docfulapi.extract
 
 import me.laiseca.docfulapi.model.Version
 
-trait VersionExtractor {
+trait VersionExtractionSupport {
   protected def firstVersion:String
   protected def lastVersion:String
   

@@ -3,7 +3,7 @@ package me.laiseca.docfulapi.extract
 import org.scalatest.FlatSpec
 import me.laiseca.docfulapi.model.Version
 
-class VersionExtractorSpec extends FlatSpec {
+class VersionExtractionSupportSpec extends FlatSpec {
   private val firstVersion = "0.0.1"
   private val lastVersion = "0.0.5"
   
@@ -36,4 +36,4 @@ class VersionExtractorSpec extends FlatSpec {
   }
 }
 
-case class VersionExtractorObject(protected val firstVersion:String, protected val lastVersion:String) extends VersionExtractor
+case class VersionExtractorObject(protected val firstVersion:String, protected val lastVersion:String) extends VersionExtractionSupport

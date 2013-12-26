@@ -7,7 +7,7 @@ import me.laiseca.docfulapi.model.Property
 import me.laiseca.docfulapi.load.YamlLoader
 
 class ModelExtractor(protected val firstVersion:String, protected val lastVersion:String)
-    extends Extractor[Model] with VersionExtractor {
+    extends Extractor[Model] with VersionExtractionSupport {
   def extract(yaml:Map[String,_]):Model = {
     val model = yaml.getOrElse("model", List()).asInstanceOf[List[_]]
     extractModel(model)
