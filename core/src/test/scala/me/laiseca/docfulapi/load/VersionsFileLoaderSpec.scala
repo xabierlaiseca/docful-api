@@ -14,7 +14,7 @@ class VersionsLoaderSpec extends FlatSpec with MockitoSugar {
     val yamlLoader = mock[YamlLoader]
     val versions = List("0.0.1", "0.0.2", "0.1.0", "0.2.0", "0.3.0")
     when(yamlLoader.loadAsMap[String, List[String]](filepath))
-    	.thenReturn(Option.apply(Map("versions" -> versions)))
+    	.thenReturn(Option(Map("versions" -> versions)))
     
     val loader = new VersionsFileLoader(yamlLoader)
     
@@ -27,7 +27,7 @@ class VersionsLoaderSpec extends FlatSpec with MockitoSugar {
     val filepath = "/versions/versions-none.yaml"
     val yamlLoader = mock[YamlLoader]
     when(yamlLoader.loadAsMap[String, List[String]](filepath))
-    	.thenReturn(Option.apply(Map[String,List[String]]()))
+    	.thenReturn(Option(Map[String,List[String]]()))
     
     val loader = new VersionsFileLoader(yamlLoader)
     

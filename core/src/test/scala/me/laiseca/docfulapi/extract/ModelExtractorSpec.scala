@@ -20,7 +20,7 @@ class ModelExtractorSpec extends FlatSpec {
     
     val extractor = new ModelExtractor(firstVersion, lastVersion)
     assertResult{
-      new Model(List(new Type("User", Option.empty, List(), Version.apply(firstVersion, lastVersion))))
+      new Model(List(new Type("User", Option.empty, List(), Version(firstVersion, lastVersion))))
     } {
       extractor.extract(model)
     }
@@ -36,8 +36,8 @@ class ModelExtractorSpec extends FlatSpec {
     
     val extractor = new ModelExtractor(firstVersion, lastVersion)
     assertResult{new Model(List(new Type("User", Option.empty, 
-        List(new Property("prop", "string", true, Option.empty, Version.apply(firstVersion, lastVersion))),
-        Version.apply(firstVersion, lastVersion))))
+        List(new Property("prop", "string", true, Option.empty, Version(firstVersion, lastVersion))),
+        Version(firstVersion, lastVersion))))
     } {
       extractor.extract(model)
     }
@@ -52,9 +52,9 @@ class ModelExtractorSpec extends FlatSpec {
       ))
     
     val extractor = new ModelExtractor(firstVersion, lastVersion)
-    assertResult{new Model(List(new Type("User", Option.apply("description"), 
-        List(new Property("prop", "string", true, Option.apply("desc2"), Version.apply(firstVersion, lastVersion))),
-        Version.apply(firstVersion, lastVersion))))
+    assertResult{new Model(List(new Type("User", Option("description"), 
+        List(new Property("prop", "string", true, Option("desc2"), Version(firstVersion, lastVersion))),
+        Version(firstVersion, lastVersion))))
     } {
       extractor.extract(model)
     }
@@ -73,10 +73,10 @@ class ModelExtractorSpec extends FlatSpec {
       ))
     
     val extractor = new ModelExtractor(firstVersion, lastVersion)
-    assertResult{new Model(List(new Type("User", Option.apply("description"), 
-        List(new Property("prop", "string", true, Option.apply("desc2"),
-          new Version("0.0.2", Option.apply("0.0.3"), "0.0.4"))),
-        new Version("0.0.6", Option.apply("0.0.7"), "0.0.8"))))
+    assertResult{new Model(List(new Type("User", Option("description"), 
+        List(new Property("prop", "string", true, Option("desc2"),
+          new Version("0.0.2", Option("0.0.3"), "0.0.4"))),
+        new Version("0.0.6", Option("0.0.7"), "0.0.8"))))
     } {
       extractor.extract(model)
     }

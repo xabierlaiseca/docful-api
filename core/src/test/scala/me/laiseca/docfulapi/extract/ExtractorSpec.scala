@@ -34,7 +34,7 @@ class ExtractorSpec extends FlatSpec {
     val map = Map("key" -> "value", "other1" -> true, "other2" -> 10)
     
     val extractor = new ExtractorObject()
-    assertResult(Option.apply("value")) {
+    assertResult(Option("value")) {
       extractor.asOptionWrapper[String]("key", map)
     }
   }

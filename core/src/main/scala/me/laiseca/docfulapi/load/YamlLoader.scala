@@ -10,7 +10,7 @@ class YamlLoader(private val yaml:Yaml = new Yaml()) {
     if(is == null) {
       Option.empty
     } else {
-      Option.apply(toScala(yaml.load(is)).asInstanceOf[Map[A,B]])
+      Option(toScala(yaml.load(is)).asInstanceOf[Map[A,B]])
     }
   }
   

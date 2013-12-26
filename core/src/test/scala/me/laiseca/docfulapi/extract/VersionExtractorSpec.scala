@@ -12,7 +12,7 @@ class VersionExtractorSpec extends FlatSpec {
         "deprecated" -> "0.0.3", "until" -> "0.0.4")
     val testObj = new VersionExtractorObject(firstVersion, lastVersion)
         
-    assertResult(new Version("0.0.2", Option.apply("0.0.3"), "0.0.4")) {
+    assertResult(new Version("0.0.2", Option("0.0.3"), "0.0.4")) {
       testObj.extractVersion(versionMap)
     }
   }
