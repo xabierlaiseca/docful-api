@@ -2,7 +2,7 @@ package me.laiseca.docfulapi.extract
 
 import org.scalatest.FlatSpec
 import me.laiseca.docfulapi.model.Resource
-import me.laiseca.docfulapi.model.Version
+import me.laiseca.docfulapi.model.Versioning
 import me.laiseca.docfulapi.model.Method
 import me.laiseca.docfulapi.model.Response
 import me.laiseca.docfulapi.model.Parameter
@@ -19,9 +19,9 @@ class ResourceExtractorSpec extends FlatSpec {
     
     val extractor = new ResourceExtractor(firstVersion, lastVersion)
     assertResult {
-      new Resource("/pets", Option.empty, Version(firstVersion, lastVersion),
-        List(new Method("GET", Option.empty, Version(firstVersion, lastVersion), List(), 
-          List(new Response(200, Option.empty, Option.empty, Version(firstVersion, lastVersion))))),
+      new Resource("/pets", Option.empty, Versioning(firstVersion, lastVersion),
+        List(new Method("GET", Option.empty, Versioning(firstVersion, lastVersion), List(), 
+          List(new Response(200, Option.empty, Option.empty, Versioning(firstVersion, lastVersion))))),
         List())
     } {
       extractor.extract(resource)
@@ -38,10 +38,10 @@ class ResourceExtractorSpec extends FlatSpec {
     
     val extractor = new ResourceExtractor(firstVersion, lastVersion)
     assertResult {
-      new Resource("/pets", Option.empty, Version(firstVersion, lastVersion),
-        List(new Method("GET", Option.empty, Version(firstVersion, lastVersion), 
-          List(new Parameter("param", "string", Option.empty, false, Version(firstVersion, lastVersion))), 
-          List(new Response(200, Option.empty, Option.empty, Version(firstVersion, lastVersion))))),
+      new Resource("/pets", Option.empty, Versioning(firstVersion, lastVersion),
+        List(new Method("GET", Option.empty, Versioning(firstVersion, lastVersion), 
+          List(new Parameter("param", "string", Option.empty, false, Versioning(firstVersion, lastVersion))), 
+          List(new Response(200, Option.empty, Option.empty, Versioning(firstVersion, lastVersion))))),
         List())
     } {
       extractor.extract(resource)
@@ -58,12 +58,12 @@ class ResourceExtractorSpec extends FlatSpec {
     
     val extractor = new ResourceExtractor(firstVersion, lastVersion)
     assertResult {
-      new Resource("/pets", Option.empty, Version(firstVersion, lastVersion),
-        List(new Method("GET", Option.empty, Version(firstVersion, lastVersion), List(), 
-          List(new Response(204, Option.empty, Option.empty, Version(firstVersion, lastVersion))))),
-        List(new Resource("/:id/toys",Option.empty, Version(firstVersion, lastVersion),
-          List(new Method("POST", Option.empty, Version(firstVersion, lastVersion), List(), 
-            List(new Response(201, Option.empty, Option.empty, Version(firstVersion, lastVersion))))),
+      new Resource("/pets", Option.empty, Versioning(firstVersion, lastVersion),
+        List(new Method("GET", Option.empty, Versioning(firstVersion, lastVersion), List(), 
+          List(new Response(204, Option.empty, Option.empty, Versioning(firstVersion, lastVersion))))),
+        List(new Resource("/:id/toys",Option.empty, Versioning(firstVersion, lastVersion),
+          List(new Method("POST", Option.empty, Versioning(firstVersion, lastVersion), List(), 
+            List(new Response(201, Option.empty, Option.empty, Versioning(firstVersion, lastVersion))))),
           List())))
     } {
       extractor.extract(resource)
@@ -87,22 +87,16 @@ class ResourceExtractorSpec extends FlatSpec {
     
     val extractor = new ResourceExtractor(firstVersion, lastVersion)
     assertResult {
-      new Resource("/pets", Option("desc1"), new Version("0.0.2", Option("0.0.3"), "0.0.4"),
-        List(new Method("GET", Option("desc2"), new Version("0.0.5", Option("0.0.6"), "0.0.7"), 
-          List(new Parameter("param", "string", Option("desc3"), false, new Version("0.0.8", Option("0.0.9"), "0.0.10"))), 
-          List(new Response(200, Option("desc4"), Option("int"), new Version("0.0.11", Option("0.0.12"), "0.0.13"))))),
-        List(new Resource("/:id/toys", Option("desc5"), Version(firstVersion, lastVersion),
-          List(new Method("POST", Option("desc6"), Version(firstVersion, lastVersion), List(), 
-            List(new Response(201, Option("desc7"), Option("float"), Version(firstVersion, lastVersion))))),
+      new Resource("/pets", Option("desc1"), new Versioning("0.0.2", Option("0.0.3"), "0.0.4"),
+        List(new Method("GET", Option("desc2"), new Versioning("0.0.5", Option("0.0.6"), "0.0.7"), 
+          List(new Parameter("param", "string", Option("desc3"), false, new Versioning("0.0.8", Option("0.0.9"), "0.0.10"))), 
+          List(new Response(200, Option("desc4"), Option("int"), new Versioning("0.0.11", Option("0.0.12"), "0.0.13"))))),
+        List(new Resource("/:id/toys", Option("desc5"), Versioning(firstVersion, lastVersion),
+          List(new Method("POST", Option("desc6"), Versioning(firstVersion, lastVersion), List(), 
+            List(new Response(201, Option("desc7"), Option("float"), Versioning(firstVersion, lastVersion))))),
           List())))
     } {
       extractor.extract(resource)
     }
   }
 }
-
-//case class Parameter(val name:String, val tpe:String, val desc:Option[String], val optional:Boolean,
-//    val version:Version) extends Versionable
-//    
-//case class Response(val code:Int, val desc:Option[String], val tpe:Option[String], 
-//    val version:Version) extends Versionable

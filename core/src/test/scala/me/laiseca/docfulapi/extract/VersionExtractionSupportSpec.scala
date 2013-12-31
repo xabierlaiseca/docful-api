@@ -1,7 +1,7 @@
 package me.laiseca.docfulapi.extract
 
 import org.scalatest.FlatSpec
-import me.laiseca.docfulapi.model.Version
+import me.laiseca.docfulapi.model.Versioning
 
 class VersionExtractionSupportSpec extends FlatSpec {
   private val firstVersion = "0.0.1"
@@ -12,7 +12,7 @@ class VersionExtractionSupportSpec extends FlatSpec {
         "deprecated" -> "0.0.3", "until" -> "0.0.4")
     val testObj = new VersionExtractorObject(firstVersion, lastVersion)
         
-    assertResult(new Version("0.0.2", Option("0.0.3"), "0.0.4")) {
+    assertResult(new Versioning("0.0.2", Option("0.0.3"), "0.0.4")) {
       testObj.extractVersion(versionMap)
     }
   }
@@ -21,7 +21,7 @@ class VersionExtractionSupportSpec extends FlatSpec {
     val versionMap = Map[String, String]()
     val testObj = new VersionExtractorObject(firstVersion, lastVersion)
         
-    assertResult(new Version(firstVersion, Option.empty, lastVersion)) {
+    assertResult(new Versioning(firstVersion, Option.empty, lastVersion)) {
       testObj.extractVersion(versionMap)
     }
   }
@@ -30,10 +30,10 @@ class VersionExtractionSupportSpec extends FlatSpec {
     val versionMap = Option.empty[Map[String, String]]
     val testObj = new VersionExtractorObject(firstVersion, lastVersion)
         
-    assertResult(new Version(firstVersion, Option.empty, lastVersion)) {
+    assertResult(new Versioning(firstVersion, Option.empty, lastVersion)) {
       testObj.extractVersion(versionMap)
     }
   }
 }
 
-case class VersionExtractorObject(protected val firstVersion:String, protected val lastVersion:String) extends VersionExtractionSupport
+case class VersionExtractorObject(protected val firstVersion:String, protected val lastVersion:String) extends VersioningExtractionSupport

@@ -6,7 +6,7 @@ import me.laiseca.docfulapi.model.Resource
 import me.laiseca.docfulapi.model.Response
 
 class ResourceExtractor(protected val firstVersion:String, protected val lastVersion:String) 
-    extends Extractor[Resource] with VersionExtractionSupport {
+    extends Extractor[Resource] with VersioningExtractionSupport {
 
   def extract(resource:Map[String,_]):Resource = {
     new Resource(

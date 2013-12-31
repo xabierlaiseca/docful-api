@@ -1,17 +1,17 @@
 package me.laiseca.docfulapi.extract
 
-import me.laiseca.docfulapi.model.Version
+import me.laiseca.docfulapi.model.Versioning
 
-trait VersionExtractionSupport {
+trait VersioningExtractionSupport {
   protected def firstVersion:String
   protected def lastVersion:String
   
-  def extractVersion(versionMap: Option[Map[String, String]]):Version = {
+  def extractVersion(versionMap: Option[Map[String, String]]):Versioning = {
     extractVersion(versionMap.getOrElse(Map[String, String]()))
   }
   
   def extractVersion(versionMap: Map[String, String]) = {
-    new Version(versionMap.getOrElse("since", firstVersion), 
+    new Versioning(versionMap.getOrElse("since", firstVersion), 
         versionMap.get("deprecated"), versionMap.getOrElse("until", lastVersion))
   }
   

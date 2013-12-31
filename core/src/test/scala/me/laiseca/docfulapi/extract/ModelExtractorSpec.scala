@@ -4,7 +4,7 @@ import org.scalatest.FlatSpec
 import org.scalatest.mock.MockitoSugar
 import me.laiseca.docfulapi.model.Model
 import me.laiseca.docfulapi.model.Type
-import me.laiseca.docfulapi.model.Version
+import me.laiseca.docfulapi.model.Versioning
 import me.laiseca.docfulapi.model.Property
 import me.laiseca.docfulapi.load.YamlLoader
 
@@ -20,7 +20,7 @@ class ModelExtractorSpec extends FlatSpec {
     
     val extractor = new ModelExtractor(firstVersion, lastVersion)
     assertResult{
-      new Model(List(new Type("User", Option.empty, List(), Version(firstVersion, lastVersion))))
+      new Model(List(new Type("User", Option.empty, List(), Versioning(firstVersion, lastVersion))))
     } {
       extractor.extract(model)
     }
@@ -36,8 +36,8 @@ class ModelExtractorSpec extends FlatSpec {
     
     val extractor = new ModelExtractor(firstVersion, lastVersion)
     assertResult{new Model(List(new Type("User", Option.empty, 
-        List(new Property("prop", "string", true, Option.empty, Version(firstVersion, lastVersion))),
-        Version(firstVersion, lastVersion))))
+        List(new Property("prop", "string", true, Option.empty, Versioning(firstVersion, lastVersion))),
+        Versioning(firstVersion, lastVersion))))
     } {
       extractor.extract(model)
     }
@@ -53,8 +53,8 @@ class ModelExtractorSpec extends FlatSpec {
     
     val extractor = new ModelExtractor(firstVersion, lastVersion)
     assertResult{new Model(List(new Type("User", Option("description"), 
-        List(new Property("prop", "string", true, Option("desc2"), Version(firstVersion, lastVersion))),
-        Version(firstVersion, lastVersion))))
+        List(new Property("prop", "string", true, Option("desc2"), Versioning(firstVersion, lastVersion))),
+        Versioning(firstVersion, lastVersion))))
     } {
       extractor.extract(model)
     }
@@ -75,8 +75,8 @@ class ModelExtractorSpec extends FlatSpec {
     val extractor = new ModelExtractor(firstVersion, lastVersion)
     assertResult{new Model(List(new Type("User", Option("description"), 
         List(new Property("prop", "string", true, Option("desc2"),
-          new Version("0.0.2", Option("0.0.3"), "0.0.4"))),
-        new Version("0.0.6", Option("0.0.7"), "0.0.8"))))
+          new Versioning("0.0.2", Option("0.0.3"), "0.0.4"))),
+        new Versioning("0.0.6", Option("0.0.7"), "0.0.8"))))
     } {
       extractor.extract(model)
     }
